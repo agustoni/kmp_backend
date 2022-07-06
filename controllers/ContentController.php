@@ -74,7 +74,7 @@ class ContentController extends Controller{
             	return $this->redirect(['index']);
             }else{
             	Yii::$app->session->setFlash('danger', 'Data gagal diupdate!');
-            	return $this->redirect(['update', 'id'=>$id]);
+            	return $this->redirect(['update', 'id'=>$Id]);
             }
         }
 
@@ -105,62 +105,6 @@ class ContentController extends Controller{
         }
     }
 
-    public function actionUploadimage(){
-        if(!empty($_POST["Content"]["inputnations"])){
-            $nation = Nations::findOne($_POST["Content"]["inputnations"]);
-            $dir = strtolower($nation->Name);
-        }else{
-            $dir = 'default';
-        }
-        foreach($_FILES as $f){
-            if (!file_exists(dirname(__FILE__).DIRECTORY_SEPARATOR.'../frontend/web/images/banner/'.$dir)) {
-                mkdir(dirname(__FILE__).DIRECTORY_SEPARATOR.'../frontend/web/images/banner/'.$dir, 0777, true);
-            }
-            
-            $content = file_get_contents($f['tmp_name'][0]);
-            $name = $f['name'][0];
-            $im = new \Imagick();
-            $im->readImageBlob($content);
-            $im->resizeImage(1347,300, \Imagick::FILTER_LANCZOS, 0.9, true);
-            $im->setImageCompressionQuality(50);
-            $ret = $im->writeImage(dirname(__FILE__).DIRECTORY_SEPARATOR.'../frontend/web/images/banner/'.$dir."/".$name);
-            
-            if($ret){
-                die('{"success":true, "name":"'.$dir.'/'.$name.'"}');
-            }else{
-                die('{"success":false}');
-            }
-        }
-    }
-
-    public function actionUploadimagemobile(){
-        if(!empty($_POST["Content"]["inputnations"])){
-            $nation = Nations::findOne($_POST["Content"]["inputnations"]);
-            $dir = strtolower($nation->Name);
-        }else{
-            $dir = 'default';
-        }
-        foreach($_FILES as $f){
-            if (!file_exists(dirname(__FILE__).DIRECTORY_SEPARATOR.'../frontend/web/images/banner/'.$dir)) {
-                mkdir(dirname(__FILE__).DIRECTORY_SEPARATOR.'../frontend/web/images/banner/'.$dir, 0777, true);
-            }
-            
-            $content = file_get_contents($f['tmp_name'][0]);
-            $name = "mobile-".$f['name'][0];
-            $im = new \Imagick();
-            $im->readImageBlob($content);
-            $im->resizeImage(350,230, \Imagick::FILTER_LANCZOS, 0.9, true);
-            $im->setImageCompressionQuality(60);
-            $ret = $im->writeImage(dirname(__FILE__).DIRECTORY_SEPARATOR.'../frontend/web/images/banner/'.$dir."/".$name);
-            
-            if($ret){
-                die('{"success":true, "name":"'.$dir.'/'.$name.'"}');
-            }else{
-                die('{"success":false}');
-            }
-        }
-    }
-
     public function saveModel($model, $post, $type){
         // print_r($post);die;
         $content = null;
@@ -171,8 +115,6 @@ class ContentController extends Controller{
 
         if(!empty($post['Content']['inputnations']) || !empty($post['Content']['inputservices'])){
             $arrContent['meta'] = $post['Content']['meta'];
-            $arrContent['desktopBanner'] = $post['Content']['imageDesktopBackground'];
-            $arrContent['mobileBanner'] = $post['Content']['imageMobileBackground'];
             // $arrContent['listkota'] = $post['Content']['listkota'];
             // $arrContent['welcome'] = $post['Content']['welcome'];
             // if(!empty($post['Content']['pdf'])){
@@ -184,57 +126,6 @@ class ContentController extends Controller{
             if(!empty($post['Content']['restriction'])){
                 $arrContent['restriction'] = $post['Content']['restriction'];
             }
-            // if(!empty($post['Content']['welcome'])){
-            //     foreach ($post['Content']['welcome'] as $k=>$v) {
-            //         if($k != "video"){
-            //             if(!empty($v['heading']) && !empty($v['content'])){
-            //                 $arrWelcome[$k] = [];
-            //                 $arrWelcome[$k]['heading'] = $v['heading'];
-            //                 $arrWelcome[$k]['content'] = $v['content'];
-            //             }
-            //         }else{
-            //             // echo dirname(__FILE__).DIRECTORY_SEPARATOR.'../..frontend/web/images/';die;
-            //             if(!empty($v)){
-            //                 $name = $v.".jpg";
-            //                 $nameMobile = $v."-mobile.jpg";
-            //                 // $image = file_get_contents("https://img.youtube.com/vi/".$v."/maxresdefault.jpg");
-            //                 if(false === ($image = @file_get_contents("https://img.youtube.com/vi/".$v."/maxresdefault.jpg"))){
-            //                     $image = file_get_contents("https://img.youtube.com/vi/".$v."/hqdefault.jpg");
-            //                 }
-            //                 $im = new \Imagick();
-            //                 $im->readImageBlob($image);
-            //                 $im->resizeImage(248,139, \Imagick::FILTER_LANCZOS, 0.9, true);
-            //                 $im->setImageCompressionQuality(50);
-            //                 $im->writeImage(dirname(__FILE__).DIRECTORY_SEPARATOR.'../../frontend/web/images/yt-thumb/'.$name);
-
-            //                 $imSmall = new \Imagick();
-            //                 $imSmall->readImageBlob($image);
-            //                 $imSmall->resizeImage(350,230, \Imagick::FILTER_LANCZOS, 0.9, true);
-            //                 $imSmall->setImageCompressionQuality(50);
-            //                 $imSmall->writeImage(dirname(__FILE__).DIRECTORY_SEPARATOR.'../../frontend/web/images/yt-thumb/'.$nameMobile);
-            //             }
-            //             $arrWelcome[$k] = $v;
-            //             $video = $v;
-            //         }
-            //     }
-            //     $arrContent['welcome'] = $arrWelcome;
-            // }
-
-            // if(!empty($post['Content']['prohibitedItems'])){
-            //     $arrContent['prohibitedItems'] = $post['Content']['prohibitedItems'];
-            // }
-            // if(!empty($post['Content']['documentationRequirements'])){
-            //     $arrContent['documentationRequirements'] = $post['Content']['documentationRequirements'];
-            // }
-            // if(!empty($post['Content']['notes'])){
-            //     $arrContent['notes'] = $post['Content']['notes'];
-            // }
-            // if(!empty($post['Content']['clearanceInformation'])){
-            //     $arrContent['clearanceInformation'] = $post['Content']['clearanceInformation'];
-            // }
-            // if(!empty($post['Content']['gifts'])){
-            //     $arrContent['gifts'] = $post['Content']['gifts'];
-            // }
 
             $content = json_encode($arrContent, JSON_UNESCAPED_UNICODE);
             

@@ -45,7 +45,7 @@ AppAsset::register($this);
     }
 
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav ml-auto'],
+        'options' => ['class' => 'navbar-nav ms-auto'],
         'items' => MenuHelper::getAssignedMenu(Yii::$app->user->id)
     ]);
     echo Nav::widget([

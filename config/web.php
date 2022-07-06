@@ -24,26 +24,38 @@ $config = [
         'assetManager' => [
             // override bundles to use local project files :
             'bundles' => [
-                'Yiisoft\Yii\Bootstrap5\BootstrapAsset' => [
-                    'sourcePath' => '@app/assets/source/bootstrap/dist',
-                    'css' => [
-                        YII_ENV_DEV ? 'css/bootstrap.css' : 'css/bootstrap.min.css',
-                    ],
-                ],
-                'Yiisoft\Yii\Bootstrap5\BootstrapPluginAsset' => [
-                    'sourcePath' => '@app/assets/source/bootstrap/dist',
-                    'js' => [
-                        YII_ENV_DEV ? 'js/bootstrap.js' : 'js/bootstrap.min.js',
-                    ]
-                ],
                 'yii\web\JqueryAsset' => [
-                    'sourcePath' => null,   // do not publish the bundle
-                    'basePath' => '@webroot',
-                    'baseUrl' => '@web',
-                    'js' => [
-                        'web/js/jquery2.2.4.js'
+                    'js' => ['jquery.min.js'],
+                    'jsOptions' => [ 'position' => \yii\web\View::POS_END],
+                ],
+                'yii\bootstrap5\BootstrapAsset' => [
+                    'sourcePath' => '@app/web/css/bootstrap',
+                    'css' => [
+                        YII_ENV_DEV ? 'bootstrap.css' : 'bootstrap.min.css',
+                    ],
+                    'cssOptions'=>[
+                        'rel'=> 'preload stylesheet',
+                        'as'=>'style',
+                        'onload'=>'this.onload=null;this.rel=\'stylesheet\'',
                     ]
                 ],
+                'yii\bootstrap5\BootstrapPluginAsset' => [
+                    'sourcePath' => '@app/web/js/bootstrap',
+                    'js' => [
+                        YII_ENV_DEV ? 'bootstrap.js' : 'bootstrap.min.js',
+                    ],
+                    'jsOptions'=>[
+                        'defer'=>'defer'
+                    ]
+                ],
+                // 'yii\web\JqueryAsset' => [
+                //     'sourcePath' => null,   // do not publish the bundle
+                //     'basePath' => '@webroot',
+                //     'baseUrl' => '@web',
+                //     'js' => [
+                //         'web/js/jquery2.2.4.js'
+                //     ]
+                // ],
             ],
         ],
         'request' => [
@@ -102,12 +114,12 @@ $config = [
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
+    // $config['bootstrap'][] = 'debug';
+    // $config['modules']['debug'] = [
+    //     'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
         //'allowedIPs' => ['127.0.0.1', '::1'],
-    ];
+    // ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [

@@ -25,20 +25,9 @@ class AppAsset extends AssetBundle
         'web/js/typeahead/typeahead-kv.min.css',
     ];
     public $js = [
-        'web/js/typeahead/handlebars.min.js',
         'web/js/typeahead/typeahead.bundle.min.js',
-        'web/js/typeahead/typeahead.jquery.min.js',
-        'web/js/typeahead/typeahead-kv.min.js',
-        'web/js/jquery.ui.widget.js',
-        'web/js/jquery.fileupload.js',
-        'web/js/select2.min.js',
-        'web/js/busy-load.min.js',
-        'web/js/Chart.min.js',
-        'web/js/utils.js',
     ];
-    public $jsOptions = [
-        'position' => \yii\web\View::POS_HEAD
-    ];
+
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap5\BootstrapAsset',
