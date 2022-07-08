@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Nations;
+use app\models\Contents;
 
 /**
- * NationSearch represents the model behind the search form of `app\models\Nations`.
+ * ContentsSearch represents the model behind the search form of `app\models\Contents`.
  */
-class NationSearch extends Nations
+class ContentsSearch extends Contents
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class NationSearch extends Nations
     public function rules()
     {
         return [
-            [['Id', 'Status'], 'integer'],
-            [['Name'], 'safe'],
+            [['id', 'id_country', 'id_services', 'status', 'created_by'], 'integer'],
+            [['slug', 'content', 'price', 'price_publish', 'created_at'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class NationSearch extends Nations
      */
     public function search($params)
     {
-        $query = Nations::find();
+        $query = Contents::find();
 
         // add conditions that should always apply here
 
@@ -58,11 +58,18 @@ class NationSearch extends Nations
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'Id' => $this->Id,
-            'Status' => $this->Status,
+            'id' => $this->id,
+            'id_country' => $this->id_country,
+            'id_services' => $this->id_services,
+            'status' => $this->status,
+            'created_by' => $this->created_by,
+            'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'Name', $this->Name]);
+        $query->andFilterWhere(['like', 'slug', $this->slug])
+            ->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['like', 'price', $this->price])
+            ->andFilterWhere(['like', 'price_publish', $this->price_publish]);
 
         return $dataProvider;
     }

@@ -5,23 +5,24 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "services".
+ * This is the model class for table "countries".
  *
  * @property int $id
  * @property string $name
+ * @property int|null $status
  *
  * @property Contents[] $contents
- * @property Countries[] $countries
  * @property Post[] $posts
+ * @property Services[] $services
  */
-class Services extends \yii\db\ActiveRecord
+class Countries extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'services';
+        return 'countries';
     }
 
     /**
@@ -31,7 +32,8 @@ class Services extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name'], 'string', 'max' => 15],
+            [['status'], 'integer'],
+            [['name'], 'string', 'max' => 40],
         ];
     }
 
@@ -43,6 +45,7 @@ class Services extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'status' => 'Status',
         ];
     }
 
@@ -53,17 +56,7 @@ class Services extends \yii\db\ActiveRecord
      */
     public function getContents()
     {
-        return $this->hasMany(Contents::className(), ['id_services' => 'Id']);
-    }
-
-    /**
-     * Gets query for [[Countries]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCountries()
-    {
-        return $this->hasMany(Countries::className(), ['Id' => 'id_country'])->viaTable('post', ['id_services' => 'Id']);
+        return $this->hasMany(Contents::className(), ['id_country' => 'Id']);
     }
 
     /**
@@ -73,6 +66,16 @@ class Services extends \yii\db\ActiveRecord
      */
     public function getPosts()
     {
-        return $this->hasMany(Post::className(), ['id_services' => 'Id']);
+        return $this->hasMany(Post::className(), ['id_country' => 'Id']);
+    }
+
+    /**
+     * Gets query for [[Services]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getServices()
+    {
+        return $this->hasMany(Services::className(), ['Id' => 'id_services'])->viaTable('post', ['id_country' => 'Id']);
     }
 }

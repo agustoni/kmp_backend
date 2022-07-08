@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Shippings;
+use app\models\Countries;
 
 /**
- * ShippingSearch represents the model behind the search form of `app\models\Shippings`.
+ * CountriesSearch represents the model behind the search form of `app\models\Countries`.
  */
-class ShippingSearch extends Shippings
+class CountriesSearch extends Countries
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class ShippingSearch extends Shippings
     public function rules()
     {
         return [
-            [['Id', 'Surcharge', 'Status'], 'integer'],
-            [['Name', 'Description', 'Alias_Name'], 'safe'],
+            [['id', 'status'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class ShippingSearch extends Shippings
      */
     public function search($params)
     {
-        $query = Shippings::find();
+        $query = Countries::find();
 
         // add conditions that should always apply here
 
@@ -58,14 +58,11 @@ class ShippingSearch extends Shippings
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'Id' => $this->Id,
-            'Surcharge' => $this->Surcharge,
-            'Status' => $this->Status,
+            'id' => $this->id,
+            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'Name', $this->Name])
-            ->andFilterWhere(['like', 'Description', $this->Description])
-            ->andFilterWhere(['like', 'Alias_Name', $this->Alias_Name]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

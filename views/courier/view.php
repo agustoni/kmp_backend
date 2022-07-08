@@ -4,20 +4,20 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Nations */
+/* @var $model app\models\Couriers */
 
-$this->title = $model->Name;
-$this->params['breadcrumbs'][] = ['label' => 'Nations', 'url' => ['index']];
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Couriers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="nations-view">
+<div class="couriers-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'Id' => $model->Id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'Id' => $model->Id], [
+        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?php Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -29,12 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'Id',
-            'Name',
+            'id',
+            'name',
             [
-                'attribute' => 'Status',
+                'attribute' => 'status',
                 'value' => function($model){
-                    return $model->Status ? "<span>Aktif</span>" : "<span class='text-danger'>Tidak Aktif</span>";
+                    return $model->status ? "<span>Aktif</span>" : "<span class='text-danger'>Tidak Aktif</span>";
                 },
                 'format' => 'raw'
             ]

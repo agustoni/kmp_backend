@@ -2,17 +2,16 @@
 
 namespace app\controllers;
 
-use Yii;
-use app\models\Shippings;
-use app\models\ShippingSearch;
+use app\models\Countries;
+use app\models\CountriesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ShippingController implements the CRUD actions for Shippings model.
+ * CountriesController implements the CRUD actions for Countries model.
  */
-class ShippingController extends Controller
+class CountriesController extends Controller
 {
     /**
      * @inheritDoc
@@ -33,13 +32,13 @@ class ShippingController extends Controller
     }
 
     /**
-     * Lists all Shippings models.
+     * Lists all Countries models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ShippingSearch();
+        $searchModel = new CountriesSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -49,31 +48,30 @@ class ShippingController extends Controller
     }
 
     /**
-     * Displays a single Shippings model.
-     * @param int $Id ID
+     * Displays a single Countries model.
+     * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($Id)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($Id),
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Shippings model.
+     * Creates a new Countries model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Shippings();
+        $model = new Countries();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                Yii::$app->session->setFlash('success', "Data berhasil dirubah");
-                return $this->redirect(['update', 'Id' => $model->Id]);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -85,19 +83,18 @@ class ShippingController extends Controller
     }
 
     /**
-     * Updates an existing Shippings model.
+     * Updates an existing Countries model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $Id ID
+     * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($Id)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($Id);
+        $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "Data berhasil dirubah");
-            return $this->redirect(['update', 'Id' => $model->Id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -106,29 +103,29 @@ class ShippingController extends Controller
     }
 
     /**
-     * Deletes an existing Shippings model.
+     * Deletes an existing Countries model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $Id ID
+     * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($Id)
+    public function actionDelete($id)
     {
-        $this->findModel($Id)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Shippings model based on its primary key value.
+     * Finds the Countries model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $Id ID
-     * @return Shippings the loaded model
+     * @param int $id ID
+     * @return Countries the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($Id)
+    protected function findModel($id)
     {
-        if (($model = Shippings::findOne(['Id' => $Id])) !== null) {
+        if (($model = Countries::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

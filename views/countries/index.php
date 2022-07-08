@@ -7,19 +7,21 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\NationSearch */
+/* @var $searchModel app\models\CountriesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Nations';
+$this->title = 'Countries';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="nations-index">
+<div class="countries-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Nations', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Countries', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?php Pjax::begin(['id' => 'grid-nation', 'timeout' => false]); ?>
     <?= GridView::widget([
@@ -28,11 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'Name',
+            'name',
             [
                 'attribute' => 'Status',
                 'value' => function($model){
-                    return $model->Status? "<span>Aktif</span>" : "<span class='text-danger'>Tidak Aktif</span>";
+                    return $model->status? "<span>Aktif</span>" : "<span class='text-danger'>Tidak Aktif</span>";
                 },
                 'format' => 'raw',
                 'filter' => ['0' =>'Tidak Aktif', '1' => 'Aktif']
@@ -41,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::className(),
                 'template' => '{view} {update}',
                 'urlCreator' => function ($action, $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'Id' => $model->Id]);
+                    return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
         ],

@@ -2,17 +2,16 @@
 
 namespace app\controllers;
 
-use Yii;
-use app\models\Nations;
-use app\models\NationSearch;
+use app\models\Couriers;
+use app\models\CouriersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * NationController implements the CRUD actions for Nations model.
+ * CourierController implements the CRUD actions for Couriers model.
  */
-class NationController extends Controller
+class CourierController extends Controller
 {
     /**
      * @inheritDoc
@@ -33,13 +32,13 @@ class NationController extends Controller
     }
 
     /**
-     * Lists all Nations models.
+     * Lists all Couriers models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new NationSearch();
+        $searchModel = new CouriersSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -49,31 +48,30 @@ class NationController extends Controller
     }
 
     /**
-     * Displays a single Nations model.
-     * @param int $Id ID
+     * Displays a single Couriers model.
+     * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($Id)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($Id),
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Nations model.
+     * Creates a new Couriers model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Nations();
+        $model = new Couriers();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                Yii::$app->session->setFlash('success', "Data berhasil dirubah");
-                return $this->redirect(['update', 'Id' => $model->Id]);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -85,19 +83,18 @@ class NationController extends Controller
     }
 
     /**
-     * Updates an existing Nations model.
+     * Updates an existing Couriers model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $Id ID
+     * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($Id)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($Id);
+        $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "Data berhasil dirubah");
-            return $this->redirect(['update', 'Id' => $model->Id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -106,29 +103,29 @@ class NationController extends Controller
     }
 
     /**
-     * Deletes an existing Nations model.
+     * Deletes an existing Couriers model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $Id ID
+     * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($Id)
+    public function actionDelete($id)
     {
-        $this->findModel($Id)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Nations model based on its primary key value.
+     * Finds the Couriers model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $Id ID
-     * @return Nations the loaded model
+     * @param int $id ID
+     * @return Couriers the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($Id)
+    protected function findModel($id)
     {
-        if (($model = Nations::findOne(['Id' => $Id])) !== null) {
+        if (($model = Couriers::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

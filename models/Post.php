@@ -5,31 +5,27 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "contents".
+ * This is the model class for table "post".
  *
  * @property int $id
- * @property int $id_country
- * @property int $id_services
- * @property string|null $slug
+ * @property int|null $id_country
+ * @property int|null $id_services
  * @property string|null $content
- * @property string|null $price
- * @property string|null $price_publish
  * @property int $status
- * @property int $created_by
- * @property string $created_at
+ * @property string|null $created_at
+ * @property int|null $created_by
  *
  * @property Countries $country
- * @property Admins $createdBy
  * @property Services $services
  */
-class Contents extends \yii\db\ActiveRecord
+class Post extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'contents';
+        return 'post';
     }
 
     /**
@@ -38,13 +34,10 @@ class Contents extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_country', 'id_services', 'status', 'created_by', 'created_at'], 'required'],
             [['id_country', 'id_services', 'status', 'created_by'], 'integer'],
-            [['content', 'price', 'price_publish'], 'string'],
+            [['content'], 'string'],
             [['created_at'], 'safe'],
-            [['slug'], 'string', 'max' => 100],
-            [['slug'], 'unique'],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Admins::className(), 'targetAttribute' => ['created_by' => 'id']],
+            [['id_country', 'id_services'], 'unique', 'targetAttribute' => ['id_country', 'id_services']],
             [['id_country'], 'exist', 'skipOnError' => true, 'targetClass' => Countries::className(), 'targetAttribute' => ['id_country' => 'Id']],
             [['id_services'], 'exist', 'skipOnError' => true, 'targetClass' => Services::className(), 'targetAttribute' => ['id_services' => 'Id']],
         ];
@@ -59,13 +52,10 @@ class Contents extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_country' => 'Id Country',
             'id_services' => 'Id Services',
-            'slug' => 'Slug',
             'content' => 'Content',
-            'price' => 'Price',
-            'price_publish' => 'Price Publish',
             'status' => 'Status',
-            'created_by' => 'Created By',
             'created_at' => 'Created At',
+            'created_by' => 'Created By',
         ];
     }
 
@@ -77,16 +67,6 @@ class Contents extends \yii\db\ActiveRecord
     public function getCountry()
     {
         return $this->hasOne(Countries::className(), ['Id' => 'id_country']);
-    }
-
-    /**
-     * Gets query for [[CreatedBy]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCreatedBy()
-    {
-        return $this->hasOne(Admins::className(), ['id' => 'created_by']);
     }
 
     /**

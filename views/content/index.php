@@ -34,22 +34,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'header' => 'Negara',
                 'attribute' => 'Nation',
                 'value' => function($model){
-                    return $model->nations->Name;
+                    return $model->country->name;
                 },
 
             ],
             [
                 'attribute' => 'Id_Services',
                 'value' => function($model){
-                    return $model->services->Name;
+                    return $model->services->name;
                 },
                 'filter' => [1=>'export', 2=>'import']
             ],
-            'Slug',
+            'slug',
             [
                 'attribute' => 'Status',
                 'value' => function($model){
-                    return $model->Status? "<span>Aktif</span>" : "<span class='text-danger'>Tidak Aktif</span>";
+                    return $model->status? "<span>Aktif</span>" : "<span class='text-danger'>Tidak Aktif</span>";
                 },
                 'format' => 'raw',
                 'filter' => [0 => 'Tidak Aktif', 1 => 'Aktif']
@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::className(),
                 'template' => '{view} {update}',
                 'urlCreator' => function ($action, $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'Id' => $model->Id]);
+                    return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
         ],

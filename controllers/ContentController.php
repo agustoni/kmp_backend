@@ -4,8 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Contents;
-use app\models\ContentSearch;
-use app\models\Nations;
+use app\models\ContentsSearch;
+use app\models\Countries;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -27,7 +27,7 @@ class ContentController extends Controller{
     }
 
     public function actionIndex(){
-        $searchModel = new ContentSearch();
+        $searchModel = new ContentsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -36,9 +36,9 @@ class ContentController extends Controller{
         ]);
     }
 
-    public function actionView($Id){
+    public function actionView($id){
         return $this->render('view', [
-            'model' => $this->findModel($Id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -60,8 +60,8 @@ class ContentController extends Controller{
         ]);
     }
 
-    public function actionUpdate($Id){
-        $model = $this->findModel($Id);
+    public function actionUpdate($id){
+        $model = $this->findModel($id);
 
         // if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
         //     return $this->redirect(['view', 'Id' => $model->Id]);
@@ -74,7 +74,7 @@ class ContentController extends Controller{
             	return $this->redirect(['index']);
             }else{
             	Yii::$app->session->setFlash('danger', 'Data gagal diupdate!');
-            	return $this->redirect(['update', 'id'=>$Id]);
+            	return $this->redirect(['update', 'id'=>$id]);
             }
         }
 
@@ -84,10 +84,10 @@ class ContentController extends Controller{
     }
 
     public function actionGetNations($q){
-        $data = Nations::find()->where('Name LIKE "%' . $q .'%"')->all();
+        $data = Countries::find()->where('name LIKE "%' . $q .'%"')->all();
         $out = [];
         foreach ($data as $d) {
-            $out[] = ['id' => $d['Id'], 'value' => $d['Name']];
+            $out[] = ['id' => $d['id'], 'value' => $d['name']];
         }
         echo Json::encode($out);
         die;
@@ -95,7 +95,7 @@ class ContentController extends Controller{
 
     public function actionCheckData(){
         if(isset($_POST['idService']) && isset($_POST['idNations'])){
-            $model = Contents::find()->where(['Id_Nations'=>$_POST['idNations'], 'Id_Services'=>$_POST['idService']])->exists();
+            $model = Contents::find()->where(['id_country'=>$_POST['idNations'], 'id_services'=>$_POST['idService']])->exists();
             
             if($model){
                 die('{"success":true}');
@@ -129,13 +129,13 @@ class ContentController extends Controller{
 
             $content = json_encode($arrContent, JSON_UNESCAPED_UNICODE);
             
-            $model->Id_Nations = $_POST['Content']['inputnations'];
-            $model->Id_Services = $_POST['Content']['inputservices'];
-            $model->Slug = str_replace(' ','',$_POST['Content']['slug']);
-            $model->Content_Ind = $content;
-            $model->Status = ($type == 'create' ? 0:1);
-            $model->CreatedBy = Yii::$app->user->id;
-            $model->Created = date("Y-m-d H:i:s");
+            $model->id_country = $_POST['Content']['inputnations'];
+            $model->id_services = $_POST['Content']['inputservices'];
+            $model->slug = str_replace(' ','',$_POST['Content']['slug']);
+            $model->content = $content;
+            $model->status = ($type == 'create' ? 0:1);
+            $model->created_by = Yii::$app->user->id;
+            $model->created_at = date("Y-m-d H:i:s");
             // $model->Video = !empty($video) ? $video : null;
             if($model->save()){
                 // Yii::$app->session->setFlash('success', 'Data berhasil disimpan');
@@ -157,8 +157,8 @@ class ContentController extends Controller{
         return $this->redirect(['index']);
     }
 
-    protected function findModel($Id){
-        if (($model = Contents::findOne(['Id' => $Id])) !== null) {
+    protected function findModel($id){
+        if (($model = Contents::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

@@ -39,22 +39,22 @@ $this->registerJsFile(
             <div class="row mb-2">
                 <div class="form-group col-md-4">
                     <label for="inputNations">Negara</label>
-                    <input type="text" class="form-control typeahead" id="inputNations" autocomplete="off" placeholder="Ketikan nama negara..." value="<?= !empty($model->Id_Nations) ? $model->nations->Name : '' ?>" required="true" <?= $type == 'update' ? 'readonly':'' ?>>
-                    <input type="hidden" name="Content[inputnations]" id="inputNationshidden" value="<?= !empty($model->Id_Nations) ? $model->Id_Nations : '' ?>">
+                    <input type="text" class="form-control typeahead" id="inputNations" autocomplete="off" placeholder="Ketikan nama negara..." value="<?= !empty($model->id_country) ? $model->country->name : '' ?>" required="true" <?= $type == 'update' ? 'readonly':'' ?>>
+                    <input type="hidden" name="Content[inputnations]" id="inputNationshidden" value="<?= !empty($model->id_country) ? $model->id_country : '' ?>">
                 </div>
                 <div class="form-group col-md-2">
                     <label for="label-Id_Services">Jasa</label>
                     <select class="form-select" id="inputServices" name="Content[inputservices]" required="true">
-                        <option <?= (!empty($model->Id_Services) ? 'disabled' : '') ?>>Please Select</option>
-                        <option value="1" <?= (!empty($model->Id_Services) ? ($model->Id_Services == 1 ? 'selected=selected' : 'disabled') : '') ?>>Export</option>
-                        <option value="2" <?= (!empty($model->Id_Services) ? ($model->Id_Services == 2 ? 'selected=selected' : 'disabled') : '') ?>>Import</option>
+                        <option <?= (!empty($model->id_services) ? 'disabled' : '') ?>>Please Select</option>
+                        <option value="1" <?= (!empty($model->id_services) ? ($model->id_services == 1 ? 'selected=selected' : 'disabled') : '') ?>>Export</option>
+                        <option value="2" <?= (!empty($model->id_services) ? ($model->id_services == 2 ? 'selected=selected' : 'disabled') : '') ?>>Import</option>
                     </select>
                 </div>
                 <div class="col-md-6">
                     <label for="basic-url">URL</label>
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon-url"><?= ($model->Id_Services == 1 ? 'jasa-kirim-ekspor/' : ($model->Id_Services == 2 ? 'jasa-kirim-impor/' : '')) ?></span>
-                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" required="true" name="Content[slug]" value="<?= !empty($model->Slug) ? $model->Slug : '' ?>">
+                        <span class="input-group-text" id="basic-addon-url"><?= ($model->id_services == 1 ? 'jasa-kirim-ekspor/' : ($model->id_services == 2 ? 'jasa-kirim-impor/' : '')) ?></span>
+                        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" required="true" name="Content[slug]" value="<?= !empty($model->slug) ? $model->slug : '' ?>">
                     </div>
                 </div>
             </div>
@@ -97,10 +97,10 @@ $this->registerJsFile(
             <div class="row mb-3">
                 <div class="col-md-12">
                     <p class="text-danger">*Harga dapat di isi ketika content sudah dibuat</p>
-                    <a href="<?= yii::$app->urlManager->createUrl(['price/index', 'idcontent' => $model->Id]); ?>"><button type="button" class="btn btn-outline-primary" <?= $type=='create' ? 'disabled' :'' ?>>Klik Disini Untuk Update Estimasi Harga</button></a>
+                    <a href="<?= yii::$app->urlManager->createUrl(['price/index', 'idcontent' => $model->id]); ?>"><button type="button" class="btn btn-outline-primary" <?= $type=='create' ? 'disabled' :'' ?>>Klik Disini Untuk Update Estimasi Harga</button></a>
                     <?php 
-                        if(!empty($model->Price)){
-                            $prc = json_decode($model->Price, true);
+                        if(!empty($model->price)){
+                            $prc = json_decode($model->price, true);
                             $shipping = array_keys($prc);
                             $tier = array_keys($prc[$shipping[0]]['sellingprice']);
                         ?>
@@ -173,7 +173,7 @@ $this->registerJsFile(
     <?php ActiveForm::end(); ?>
 </div>
 <script>
-    const globalContent = <?= json_encode($model->Content_Ind) ?>;
+    const globalContent = <?= json_encode($model->content) ?>;
 </script>
 <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
 <script type="text/javascript">
