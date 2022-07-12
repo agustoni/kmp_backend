@@ -20,14 +20,14 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'web/css/site.css',
-        'web/css/busy-load.min.css',
-        'web/js/typeahead/typeahead.min.css',
-        'web/js/typeahead/typeahead-kv.min.css',
+        ['web/css/site.css', 'rel' => 'preload stylesheet', 'as' => 'style','onload'=>'this.onload=null;this.rel=\'stylesheet\''],
+        ['web/css/busy-load.min.css', 'rel' => 'preload stylesheet', 'as' => 'style','onload'=>'this.onload=null;this.rel=\'stylesheet\''],
+        ['web/js/typeahead/typeahead.min.css', 'rel' => 'preload stylesheet', 'as' => 'style','onload'=>'this.onload=null;this.rel=\'stylesheet\''],
+        ['web/js/typeahead/typeahead-kv.min.css', 'rel' => 'preload stylesheet', 'as' => 'style','onload'=>'this.onload=null;this.rel=\'stylesheet\'']
     ];
     public $js = [
-        'web/js/typeahead/typeahead.bundle.min.js',
-        'web/js/busy-load.min.js',
+        ['web/js/typeahead/typeahead.bundle.min.js'],
+        ['web/js/busy-load.min.js'],
     ];
 
     public $depends = [
