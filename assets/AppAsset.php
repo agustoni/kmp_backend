@@ -21,11 +21,13 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'web/css/site.css',
+        'web/css/busy-load.min.css',
         'web/js/typeahead/typeahead.min.css',
         'web/js/typeahead/typeahead-kv.min.css',
     ];
     public $js = [
         'web/js/typeahead/typeahead.bundle.min.js',
+        'web/js/busy-load.min.js',
     ];
 
     public $depends = [
