@@ -50,8 +50,8 @@ class Post extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_country' => 'Id Country',
-            'id_services' => 'Id Services',
+            'id_country' => 'Country',
+            'id_services' => 'Service',
             'content' => 'Content',
             'status' => 'Status',
             'created_at' => 'Created At',
@@ -66,7 +66,7 @@ class Post extends \yii\db\ActiveRecord
      */
     public function getCountry()
     {
-        return $this->hasOne(Countries::className(), ['Id' => 'id_country']);
+        return $this->hasOne(Countries::className(), ['id' => 'id_country']);
     }
 
     /**
@@ -76,6 +76,6 @@ class Post extends \yii\db\ActiveRecord
      */
     public function getServices()
     {
-        return $this->hasOne(Services::className(), ['Id' => 'id_services']);
+        return $this->hasOne(Services::className(), ['id' => 'id_services']);
     }
 }
