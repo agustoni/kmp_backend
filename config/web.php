@@ -15,6 +15,9 @@ $config = [
         'admin' => [
             'class' => 'mdm\admin\Module',
         ],
+        'publishrate' => [
+            'class' => 'app\modules\publishrate\Module',
+        ],
     ],
     'components' => [
         'authManager' => [
