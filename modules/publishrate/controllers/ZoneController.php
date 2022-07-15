@@ -63,9 +63,14 @@ class ZoneController extends Controller
                         ])
                         ->where(['id' => $id])
                         ->one();
+        $list = null;
+        if(!empty($model->list_id_content)){
+            $list = json_decode($model->list_id_content, TRUE);
+        }
         
         return $this->render('view', [
-            'model' => $model
+            'model' => $model,
+            'list' => $list
         ]);
     }
 
