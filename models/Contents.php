@@ -50,6 +50,12 @@ class Contents extends \yii\db\ActiveRecord
         ];
     }
 
+    public function scenarios() {
+        $scenarios = parent::scenarios();
+        $scenarios['savepricepublish'] = ['price_publish']; //Scenario Values Only Accepted
+	    return $scenarios;
+    }
+
     /**
      * {@inheritdoc}
      */

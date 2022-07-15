@@ -84,6 +84,10 @@ $this->registerJsFile(
             </div>
         </div>
     </section>
+    <hr>
+    <section id="section-publish-price">
+        <?= Yii::$app->controller->renderPartial('/price/index', ['modelpublispricezone' => $model])?>
+    </section>
 
     <!-- MODAL -->
     <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="countryModal" tabindex="-1" aria-labelledby="countryModalLabel" aria-hidden="true">
