@@ -64,7 +64,7 @@ class Contents extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_country' => 'Id Country',
-            'id_services' => 'Id Services',
+            'id_services' => 'Service',
             'slug' => 'Slug',
             'content' => 'Content',
             'price' => 'Price',
@@ -82,7 +82,7 @@ class Contents extends \yii\db\ActiveRecord
      */
     public function getCountry()
     {
-        return $this->hasOne(Countries::className(), ['Id' => 'id_country']);
+        return $this->hasOne(Countries::className(), ['id' => 'id_country']);
     }
 
     /**
@@ -102,6 +102,6 @@ class Contents extends \yii\db\ActiveRecord
      */
     public function getServices()
     {
-        return $this->hasOne(Services::className(), ['Id' => 'id_services']);
+        return $this->hasOne(Services::className(), ['id' => 'id_services']);
     }
 }

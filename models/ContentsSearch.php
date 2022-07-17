@@ -14,11 +14,15 @@ class ContentsSearch extends Contents
     /**
      * {@inheritdoc}
      */
+
+    public $country;
+
     public function rules()
     {
         return [
             [['id', 'id_country', 'id_services', 'status', 'created_by'], 'integer'],
-            [['slug', 'content', 'price', 'price_publish', 'created_at'], 'safe'],
+            [['country'], 'string'],
+            [['slug', 'content', 'price', 'price_publish', 'created_at', 'country'], 'safe'],
         ];
     }
 
@@ -40,7 +44,7 @@ class ContentsSearch extends Contents
      */
     public function search($params)
     {
-        $query = Contents::find();
+        $query = Contents::find()->joinWith(['country']);
 
         // add conditions that should always apply here
 
@@ -69,6 +73,7 @@ class ContentsSearch extends Contents
         $query->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'content', $this->content])
             ->andFilterWhere(['like', 'price', $this->price])
+            ->andFilterWhere(['like', 'countries.name', $this->country])
             ->andFilterWhere(['like', 'price_publish', $this->price_publish]);
 
         return $dataProvider;
