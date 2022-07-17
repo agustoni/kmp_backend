@@ -31,15 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             [
-                'header' => 'Negara',
-                'attribute' => 'Nation',
+                'attribute' => 'country',
                 'value' => function($model){
                     return $model->country->name;
                 },
 
             ],
             [
-                'attribute' => 'Id_Services',
+                'attribute' => 'id_services',
                 'value' => function($model){
                     return $model->services->name;
                 },
@@ -47,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'slug',
             [
-                'attribute' => 'Status',
+                'attribute' => 'status',
                 'value' => function($model){
                     return $model->status? "<span>Aktif</span>" : "<span class='text-danger'>Tidak Aktif</span>";
                 },
