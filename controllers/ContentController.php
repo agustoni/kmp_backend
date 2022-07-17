@@ -6,10 +6,13 @@ use Yii;
 use app\models\Contents;
 use app\models\ContentsSearch;
 use app\models\Countries;
+use app\models\PublishPriceCategory;
+use app\models\PublishPriceZone;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+use yii\db\Query;
 
 class ContentController extends Controller{
     public function behaviors(){
@@ -37,9 +40,26 @@ class ContentController extends Controller{
     }
 
     public function actionView($id){
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = Contents::find()->where(['id' => $id])->one();
+        $arr_content = json_decode($model->content, TRUE);
+        $arr_publish_price = json_decode($model->price_publish, TRUE);
+        $arr_price = json_decode($model->price, TRUE);
+
+        $country_category_zone = \Yii::$app->db->createCommand("
+                    SELECT b.id, b.id_publish_price_category, ppc.name as category_name, b.zone, JSON_UNQUOTE(b.res) as country 
+                    FROM
+                        (SELECT a.id, a.id_publish_price_category, a.zone, JSON_EXTRACT(a.result, '$.".$model->id."') as res 
+                            FROM
+                                (SELECT id, id_publish_price_category, zone, JSON_EXTRACT(list_id_content, '$.".strtolower($model->services->name)."') AS 'Result' 
+                                    FROM 
+                                        ".PublishPriceZone::tableName()." ) as a) as b
+                    LEFT JOIN ".PublishPriceCategory::tableName()." ppc
+                        ON ppc.id = b.id_publish_price_category
+                    WHERE b.res IS NOT NULL
+                ")->queryAll();
+        // var_dump($country_category_zone);die;
+        // echo "<pre>";print_r($country_category_zone);die;
+        return $this->render('view', compact('model', 'arr_content', 'country_category_zone', 'arr_publish_price'));
     }
 
     public function actionCreate(){

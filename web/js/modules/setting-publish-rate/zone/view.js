@@ -12,7 +12,7 @@ function loadlistcountry(type){
         columns: [
             { 
                 "data": function(row, type, set, meta){
-                    return row.name;
+                    return `<a href="../../../content/view/`+row.id+`" target="_blank">`+ row.name +`</a>`;
                 }
             },
             { 
