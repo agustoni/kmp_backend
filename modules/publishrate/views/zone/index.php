@@ -36,6 +36,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'zone',
             [
+                'label' => 'Description',
+                'value' => function($model){
+                    $arr_list_content = json_decode($model->list_id_content, TRUE);
+                    $arr_type = [];
+                    foreach($arr_list_content as $type => $value){
+                        $arr_type[] = $type;
+                    }
+                    $str = '';
+                    foreach($arr_type as $type){
+                        $str .= '<p><b>'. $type .' : </b>'. implode(", ",$arr_list_content[$type]) .'</p>';
+                    }
+
+                    return $str;
+                },
+                'format' => 'raw'
+            ],
+            [
                 'class' => ActionColumn::className(),
                 'template' => '{view} {update}',
                 'urlCreator' => function ($action, $model, $key, $index, $column) {
@@ -43,6 +60,9 @@ $this->params['breadcrumbs'][] = $this->title;
                  }
             ],
         ],
+        'pager' => [
+            'class' => '\yii\bootstrap5\LinkPager'
+        ]
     ]); ?>
 
     <?php Pjax::end(); ?>

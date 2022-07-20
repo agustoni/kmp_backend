@@ -63,7 +63,7 @@ $('#save-modal-country').click(function(){
     }).get();
     var id=$(this).data('publishpricezone');
 
-    if(!checkedValues){
+    if(checkedValues.length == 0){
         alert ('no selected country');
         return false;
     }

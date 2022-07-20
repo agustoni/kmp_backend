@@ -57,8 +57,7 @@ class ContentController extends Controller{
                         ON ppc.id = b.id_publish_price_category
                     WHERE b.res IS NOT NULL
                 ")->queryAll();
-        // var_dump($country_category_zone);die;
-        // echo "<pre>";print_r($country_category_zone);die;
+        // echo "<pre>";print_r($arr_publish_price);die;
         return $this->render('view', compact('model', 'arr_content', 'country_category_zone', 'arr_publish_price'));
     }
 
@@ -82,10 +81,6 @@ class ContentController extends Controller{
 
     public function actionUpdate($id){
         $model = $this->findModel($id);
-
-        // if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-        //     return $this->redirect(['view', 'Id' => $model->Id]);
-        // }
 
         if (isset($_POST['Content'])) {
         
