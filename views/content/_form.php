@@ -8,7 +8,7 @@ use yii\bootstrap5\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 
 $this->registerJsFile(
-    YII_ENV_DEV ? '@web/web/js/content/form.js' : '@web/web/js/content/form.min.js',
+    '@web/web/js/content/form.js',
     ['depends' => [\yii\web\JqueryAsset::class], 'defer' => 'defer'],
 );
 ?>
@@ -95,9 +95,47 @@ $this->registerJsFile(
         <!-- PRICE TAX TAB -->
         <div class="tab-pane fade" id="nav-pricetax" role="tabpanel" aria-labelledby="nav-pricetax-tab">
             <div class="row mb-3">
+                <div class="col-12">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <p class="text-danger">*Harga dapat di isi ketika content sudah dibuat</p>
+                            <a class="btn btn-outline-primary" role="button" href="<?= yii::$app->urlManager->createUrl(['publishrate/price/publish-price-by-content', 'idcontent' => $model->id]); ?>">Update Publish Rate</a>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <?php 
+                            if(!empty($model->price_publish)){ 
+                                $publish_price = json_decode($model->price_publish, true); 
+                                ksort($publish_price);
+                                foreach($publish_price as $k=>$v){ ?>
+                                <div class="col table-responsive">
+                                    <table class="table">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>Tier</th>
+                                                <th><?= $k ?></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach($v as $tier => $price){ ?>
+                                            <tr>
+                                                <td><?= $tier ?></td>
+                                                <td><?= $price ?></td>
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                        <?php   } 
+                            } ?>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row mb-3">
                 <div class="col-md-12">
                     <p class="text-danger">*Harga dapat di isi ketika content sudah dibuat</p>
-                    <a href="<?= yii::$app->urlManager->createUrl(['price/index', 'idcontent' => $model->id]); ?>"><button type="button" class="btn btn-outline-primary" <?= $type=='create' ? 'disabled' :'' ?>>Klik Disini Untuk Update Estimasi Harga</button></a>
+                    <a href="<?= yii::$app->urlManager->createUrl(['price/index', 'idcontent' => $model->id]); ?>"><button type="button" class="btn btn-outline-dark" <?= $type=='create' ? 'disabled' :'' ?>>Klik Disini Untuk Update Estimasi Harga</button></a>
                     <?php 
                         if(!empty($model->price)){
                             $prc = json_decode($model->price, true);
@@ -106,7 +144,7 @@ $this->registerJsFile(
                         ?>
                         <table class="table table-bordered text-center mt-4">
                             <thead>
-                                <tr class="table-primary">
+                                <tr class="table-dark">
                                     <th>Tier</th>
                                     <?php foreach($shipping as $s){ ?>
                                         <th><?= $s ?></th>
