@@ -62,12 +62,12 @@ class ContentsSearch extends Contents
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'id_country' => $this->id_country,
-            'id_services' => $this->id_services,
-            'status' => $this->status,
-            'created_by' => $this->created_by,
-            'created_at' => $this->created_at,
+            'contents.id' => $this->id,
+            'contents.id_country' => $this->id_country,
+            'contents.id_services' => $this->id_services,
+            'contents.status' => $this->status,
+            'contents.created_by' => $this->created_by,
+            'contents.created_at' => $this->created_at,
         ]);
 
         $query->andFilterWhere(['like', 'slug', $this->slug])
