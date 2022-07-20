@@ -86,7 +86,7 @@ $this->registerJsFile(
     </section>
     <hr>
     <section id="section-publish-price">
-        <?= Yii::$app->controller->renderPartial('/price/index', ['modelpublispricezone' => $model])?>
+        <?= Yii::$app->controller->renderPartial('/price/publish-price-by-category-zone', ['modelpublispricezone' => $model])?>
     </section>
 
     <!-- MODAL -->

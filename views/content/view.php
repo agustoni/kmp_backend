@@ -83,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <?php if(!empty($arr_publish_price)){ ?>
+                                                        <?php if(isset($arr_publish_price) && !empty($arr_publish_price[strtolower($ccz["category_name"])])){ ?>
                                                         <table class="table">
                                                             <thead>
                                                                 <tr>
