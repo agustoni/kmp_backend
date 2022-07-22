@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'id',
             'name',
+            'description',
             [
                 'class' => ActionColumn::className(),
                 'template' => '{view} {update}',

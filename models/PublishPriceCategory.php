@@ -30,6 +30,7 @@ class PublishPriceCategory extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 30],
+            [['description'], 'string', 'max' => 50],
         ];
     }
 
@@ -41,16 +42,17 @@ class PublishPriceCategory extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'description' => 'Description'
         ];
     }
 
     /**
-     * Gets query for [[PublishPriceCategoryZones]].
+     * Gets query for [[PublishPriceZone]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPublishPriceCategoryZones()
+    public function getPublishPriceZones()
     {
-        return $this->hasMany(PublishPriceCategoryZone::className(), ['id_publish_price_category' => 'id']);
+        return $this->hasMany(PublishPriceZone::className(), ['id_publish_price_category' => 'id']);
     }
 }
