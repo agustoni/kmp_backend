@@ -28,10 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             [
-                'attribute' => 'category',
+                'attribute' => 'id_publish_price_category',
                 'value' => function($model){
                     return $model->publishPriceCategory->name;
                 },
+                'filter' => $category,
                 'format' => 'raw'
             ],
             'zone',

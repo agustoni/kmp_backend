@@ -9,6 +9,7 @@ use app\models\PublishPriceZoneSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * ZoneController implements the CRUD actions for PublishPriceZone model.
@@ -42,10 +43,12 @@ class ZoneController extends Controller
     {
         $searchModel = new PublishPriceZoneSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $category = ArrayHelper::map(PublishPriceCategory::find()->all(), 'id','name');
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'category' => $category
         ]);
     }
 

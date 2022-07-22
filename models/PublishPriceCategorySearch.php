@@ -18,7 +18,7 @@ class PublishPriceCategorySearch extends PublishPriceCategory
     {
         return [
             [['id'], 'integer'],
-            [['name'], 'safe'],
+            [['name', 'description'], 'safe'],
         ];
     }
 
@@ -61,7 +61,7 @@ class PublishPriceCategorySearch extends PublishPriceCategory
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }
