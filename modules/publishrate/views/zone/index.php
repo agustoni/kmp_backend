@@ -40,12 +40,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model){
                     $arr_list_content = json_decode($model->list_id_content, TRUE);
                     $arr_type = [];
-                    foreach($arr_list_content as $type => $value){
-                        $arr_type[] = $type;
-                    }
                     $str = '';
-                    foreach($arr_type as $type){
-                        $str .= '<p><b>'. $type .' : </b>'. implode(", ",$arr_list_content[$type]) .'</p>';
+                    if(!empty($arr_list_content)){
+                        foreach($arr_list_content as $type => $value){
+                            $arr_type[] = $type;
+                        }
+                        foreach($arr_type as $type){
+                            $str .= '<p><b>'. $type .' : </b>'. implode(", ",$arr_list_content[$type]) .'</p>';
+                        }
+
                     }
 
                     return $str;
