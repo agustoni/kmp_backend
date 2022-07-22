@@ -14,14 +14,12 @@ class PublishPriceZoneSearch extends PublishPriceZone
     /**
      * {@inheritdoc}
      */
-    public $category;
 
     public function rules()
     {
         return [
             [['id', 'id_publish_price_category'], 'integer'],
-            [['category'], 'string'],
-            [['zone', 'list_id_content', 'category'], 'safe'],
+            [['zone', 'list_id_content'], 'safe'],
         ];
     }
 
@@ -65,8 +63,7 @@ class PublishPriceZoneSearch extends PublishPriceZone
             'id_publish_price_category' => $this->id_publish_price_category,
         ]);
 
-        $query->andFilterWhere(['like', 'zone', $this->zone])
-            ->andFilterWhere(['like', 'ppc.name', $this->category]);
+        $query->andFilterWhere(['like', 'zone', $this->zone]);
 
         return $dataProvider;
     }

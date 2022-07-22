@@ -35,7 +35,7 @@ $this->registerJsFile(
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="float-start"><?= $c->name ?></h5>
+                        <h5 class="float-start"><?= $c->name.' - '.$c->description ?></h5>
                         <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#countryModal" data-bs-idcategory="<?= $c->id ?>" data-bs-categoryname="<?= strtolower($c->name) ?>" data-bs-idcontent="<?= $content->id ?>">Update To Country With Same Zone</button>
                     </div>
                     <div class="card-body">
